@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "main": "dist/server.js",
   "scripts": {
-    "clean": "rm -rf ./dist/*",
     "build": "npm run clean && babel 'src' --out-dir 'dist' --source-maps",
     "dev": "nodemon src/server.js",
-    "start": "npm run build && node dist/server.js"
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "cross-env": "^7.0.2",
