@@ -3,7 +3,6 @@ var router = express.Router();
 
 /* GET home page. */
 
-const randomOffset = Math.floor(Math.random() * 1000);
 
 function getRandomSearch() {
     // A list of all characters that can be chosen.
@@ -29,6 +28,7 @@ function getRandomSearch() {
 
 router.get('/', function(req, res, next) {
     const search = getRandomSearch();
+    let randomOffset = Math.floor(Math.random() * 8000);
     console.log(search)
 
     function doit() {
