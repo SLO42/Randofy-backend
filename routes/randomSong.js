@@ -45,10 +45,10 @@ router.get('/', function(req, res, next) {
         .then(function(data) {
           // let stuff = new RegExp(`/^:+[a-zA-Z]*:`)
           // let myIp = req.socket.remoteAddress.replace(stuff, '');
-          let geo = geoip.lookup(req.ip);
+          let geo = geoip.lookup(req.ips);
           
 
-          console.log(req.ip, geo);
+          console.log(req.ips, geo);
 
           let returnData = {
             "album_name": data.body.tracks.items[0].album.name,
