@@ -63,10 +63,8 @@ router.get('/', function(req, res, next) {
         var xForwardedFor = (req.headers['x-forwarded-for'] || '').replace(/:\d+$/, '');
         var ip = xForwardedFor || req.connection.remoteAddress;
         req.ipInfo = { ip, ...getIpInfo(ip) };
-        console.log(req.ipInfo);
-        let myip = getIpInfo(req.socket.remoteAddress);
-        console.log("my ip", myip, "middleware", req.ipInfo);
-
+        if (data.body.tracks.items[0].album.available_markets.includes(req.ipInfo.country)){
+          console.log("passed");
           let returnData = {
             "album_name": data.body.tracks.items[0].album.name,
             "album_image": data.body.tracks.items[0].album.images[1],
@@ -76,8 +74,14 @@ router.get('/', function(req, res, next) {
             "spotify_url": data.body.tracks.items[0].external_urls.spotify,
             "is_explicit": data.body.tracks.items[0].explicit,
             "attempts": att,
-        };
+          };
         res.status(200).send(returnData);
+        }
+        else{
+          console.log("bad Market Match");
+          doit();
+        }
+
         }, function(err) {
           console.log("nope")
           doit();
