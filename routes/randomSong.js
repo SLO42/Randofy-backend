@@ -28,14 +28,15 @@ function getRandomSearch() {
 
 router.get('/', function(req, res, next) {
     const search = getRandomSearch();
-    let randomOffset = Math.floor(Math.random() * 5000);
     console.log(search)
-
+    let att = 0;
     function doit() {
-        console.log("had to retry");
+      att++;
+        console.log("attempt number: ", att );
         retry();
     }
     function retry() {
+      let randomOffset = Math.floor(Math.random() * 5000);
         req.spotify.searchTracks(search,{ limit: 1, offset: randomOffset})
         .then(function(data) {
             console.log(`Search tracks by ${search} in the artist name`, data.body);
@@ -44,7 +45,7 @@ router.get('/', function(req, res, next) {
             console.log("nope")
             doit();
     })};
-    retry();
+    doit();
     
 });
 
