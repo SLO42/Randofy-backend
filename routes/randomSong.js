@@ -43,12 +43,29 @@ router.get('/', function(req, res, next) {
       let randomOffset = Math.floor(Math.random() * 10000);
         req.spotify.searchTracks(search,{ limit: 1, offset: randomOffset})
         .then(function(data) {
-          // let stuff = new RegExp(`/^:+[a-zA-Z]*:`)
-          // let myIp = req.socket.remoteAddress.replace(stuff, '');
-          let geo = geoip.lookup(req.ips);
-          
+          var getIpInfo = function (ip) {
+            // IPV6 addresses can include IPV4 addresses
+            // So req.ip can be '::ffff:86.3.182.58'
+            // However geoip-lite returns null for these
+            if (ip.includes('::ffff:')) {
+                ip = ip.split(':').reverse()[0]
+            }
+            var lookedUpIP = geoip.lookup(ip);
+            if ((ip === '127.0.0.1' || ip === '::1')) {
+                return {error:"This won't work on localhost"}
+            }
+            if (!lookedUpIP){
+                return { error: "Error occured while trying to process the information" }
+            }
+            return lookedUpIP;
+        }
 
-          console.log(req.ips, geo);
+        var xForwardedFor = (req.headers['x-forwarded-for'] || '').replace(/:\d+$/, '');
+        var ip = xForwardedFor || req.connection.remoteAddress;
+        req.ipInfo = { ip, ...getIpInfo(ip) };
+        console.log(req.ipInfo);
+        let myip = getIpInfo(req.socket.remoteAddress);
+        console.log(myip, req.ipInfo)
 
           let returnData = {
             "album_name": data.body.tracks.items[0].album.name,
