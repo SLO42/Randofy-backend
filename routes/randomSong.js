@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var geoip = require('geoip-lite');
 /* GET home page. */
 
 
@@ -41,6 +41,10 @@ router.get('/', function(req, res, next) {
       let randomOffset = Math.floor(Math.random() * 10000);
         req.spotify.searchTracks(search,{ limit: 1, offset: randomOffset})
         .then(function(data) {
+
+          let geo = geoip.lookup(req.connection.remoteAddress)
+          console.log(geo);
+          
           let returnData = {
             "album_name": data.body.tracks.items[0].album.name,
             "album_image": data.body.tracks.items[0].album.images[1],
@@ -51,7 +55,6 @@ router.get('/', function(req, res, next) {
             "is_explicit": data.body.tracks.items[0].explicit,
             "attempts": att,
         };
-        console.log(req.connection.remoteAddress);
         res.status(200).send(returnData);
         }, function(err) {
           console.log("nope")
