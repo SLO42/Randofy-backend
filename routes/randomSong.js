@@ -42,8 +42,8 @@ router.get('/', function(req, res, next) {
         req.spotify.searchTracks(search,{ limit: 1, offset: randomOffset})
         .then(function(data) {
           
-          let geo = geoip.lookup(req.connection.remoteAddress)
-          console.log(req.connection.remoteAddress, geo);
+          let geo = geoip.lookup(req.socket.localAddress)
+          console.log(req.socket.localAddress, geo);
 
           let returnData = {
             "album_name": data.body.tracks.items[0].album.name,
