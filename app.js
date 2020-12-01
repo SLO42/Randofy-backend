@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+var SpotifyWebApi = require('spotify-web-api-node');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,5 +38,34 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+var clientId = process.env.SPOT_ID,
+  clientSecret = process.env.SPOT_SECRET;
+var redirect_uri = 'localhost:8888';
+
+var spotifyApi = new SpotifyWebApi({
+  clientId: clientId,
+  clientSecret: clientSecret
+});
+
+spotifyApi.clientCredentialsGrant().then(
+  function(data) {
+    console.log('The access token is ' + data.body['access_token']);
+    spotifyApi.setAccessToken(data.body['access_token']);
+  },
+  function(err) {
+    console.log('Something went wrong!', err);
+  }
+);
+
+app.get('/login', function(req, res) {
+  var scopes = 'user-read-private user-read-email';
+  res.redirect('https://accounts.spotify.com/authorize' +
+    '?response_type=code' +
+    '&client_id=' + clientId +
+    (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+    '&redirect_uri=' + encodeURIComponent(redirect_uri));
+});
+
 
 module.exports = app;
