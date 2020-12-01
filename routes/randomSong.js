@@ -30,20 +30,32 @@ router.get('/', function(req, res, next) {
     const search = getRandomSearch();
     console.log(search)
     let att = 0;
+    // doit tracks attempts, by count
     function doit() {
       att++;
         console.log("attempt number: ", att );
         retry();
     }
+    // retry makes the attempt to get data
     function retry() {
       let randomOffset = Math.floor(Math.random() * 10000);
         req.spotify.searchTracks(search,{ limit: 1, offset: randomOffset})
         .then(function(data) {
-            console.log(`Search tracks by ${search} in the artist name`, data.body);
-            res.status(200).send(data.body);
+          let returnData = {
+            "album_name": data.body.tracks.items[0].album.name,
+            "album_image": data.body.tracks.items[0].album.images[1],
+            "track_artist": data.body.tracks.items[0].artists[0].name,
+            "track_name": data.body.tracks.items[0].name,
+            "preview_url": data.body.tracks.items[0].preview_url,
+            "spotify_url": data.body.tracks.items[0].external_urls.spotify,
+            "is_explicit": data.body.tracks.items[0].explicit,
+            "attempts": att,
+        };
+        console.log(req.connection.remoteAddress);
+        res.status(200).send(returnData);
         }, function(err) {
-            console.log("nope")
-            doit();
+          console.log("nope")
+          doit();
     })};
     doit();
     
