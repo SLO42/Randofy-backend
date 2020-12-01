@@ -1,11 +1,11 @@
 {
   "name": "custom-server-express",
   "version": "1.0.0",
-  "main": "src/server.js",
+  "main": "server.js",
   "scripts": {
     "build": "npm run clean && babel 'src' --out-dir 'dist' --source-maps",
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "cross-env": "^7.0.2",
