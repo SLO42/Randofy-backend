@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
         retry();
     }
     function retry() {
-      let randomOffset = Math.floor(Math.random() * 5000);
+      let randomOffset = Math.floor(Math.random() * 10000);
         req.spotify.searchTracks(search,{ limit: 1, offset: randomOffset})
         .then(function(data) {
             console.log(`Search tracks by ${search} in the artist name`, data.body);
