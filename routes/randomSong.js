@@ -37,13 +37,18 @@ router.get('/', function(req, res, next) {
         retry();
     }
     // retry makes the attempt to get data
+
+    // new regex(/^:+[a-zA-Z]*:)
     function retry() {
       let randomOffset = Math.floor(Math.random() * 10000);
         req.spotify.searchTracks(search,{ limit: 1, offset: randomOffset})
         .then(function(data) {
+          let stuff = new RegExp(`/^:+[a-zA-Z]*:`)
+          let myIp = req.socket.localAddress.replace(stuff, '');
+          let geo = geoip.lookup(myIp);
           
-          let geo = geoip.lookup(req.socket.localAddress)
-          console.log(req.socket.localAddress, geo);
+
+          console.log(myIp, geo);
 
           let returnData = {
             "album_name": data.body.tracks.items[0].album.name,
