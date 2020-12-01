@@ -43,12 +43,12 @@ router.get('/', function(req, res, next) {
       let randomOffset = Math.floor(Math.random() * 10000);
         req.spotify.searchTracks(search,{ limit: 1, offset: randomOffset})
         .then(function(data) {
-          let stuff = new RegExp(`/^:+[a-zA-Z]*:`)
-          let myIp = req.socket.localAddress.replace(stuff, '');
-          let geo = geoip.lookup(myIp);
+          // let stuff = new RegExp(`/^:+[a-zA-Z]*:`)
+          // let myIp = req.socket.remoteAddress.replace(stuff, '');
+          let geo = geoip.lookup(req.ip);
           
 
-          console.log(myIp, geo);
+          console.log(req.ip, geo);
 
           let returnData = {
             "album_name": data.body.tracks.items[0].album.name,
