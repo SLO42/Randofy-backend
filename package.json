@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "build": "npm run clean && babel 'src' --out-dir 'dist' --source-maps",
     "dev": "nodemon src/server.js",
     "start": "node server.js"
   },
