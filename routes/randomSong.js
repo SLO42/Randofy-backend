@@ -65,7 +65,7 @@ router.get('/', function(req, res, next) {
         req.ipInfo = { ip, ...getIpInfo(ip) };
         console.log(req.ipInfo);
         let myip = getIpInfo(req.socket.remoteAddress);
-        console.log(myip, req.ipInfo)
+        console.log("my ip", myip, "middleware", req.ipInfo);
 
           let returnData = {
             "album_name": data.body.tracks.items[0].album.name,
