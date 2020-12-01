@@ -15,4 +15,8 @@ router.get('/', function(req, res, next) {
         '&redirect_uri=' + encodeURIComponent(redirect_uri));
 });
 
+router.get('/a', function(req, res, next) {
+    res.send(`<p>testing</p>`);
+ });
+
 module.exports = router;
