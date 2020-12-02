@@ -36,9 +36,10 @@ router.get('/', function(req, res, next) {
       let randomOffset = Math.floor(Math.random() * 10000);
         req.spotify.searchTracks(search,{ limit: 1, offset: randomOffset})
         .then(function(data) {
+            console.log(data.body.tracks.items[0].album.images[2]);
               let returnData = {
                 "album_name": data.body.tracks.items[0].album.name,
-                "album_image": data.body.tracks.items[0].album.images[1],
+                "album_image": data.body.tracks.items[0].album.images[2],
                 "track_artist": data.body.tracks.items[0].artists[0].name,
                 "track_name": data.body.tracks.items[0].name,
                 "preview_url": data.body.tracks.items[0].preview_url,
@@ -47,7 +48,17 @@ router.get('/', function(req, res, next) {
                 "attempts": att,
               };
               console.log(returnData);
-              res.render('github', {album_image: returnData.album_image.url});
+
+              const svg = `<svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="100%" width="100%">
+              <a href=${returnData.spotify_url}>
+                <text overflow-wrap='normal' y='20'>
+                Album: ${returnData.album_name} |
+                Song:  ${returnData.track_name}
+                </text >
+                 <image y="40" href=${returnData.album_image.url}  height="${returnData.album_image.height}" width="${returnData.album_image.width}"/>
+              </a>
+         </svg>`
+              res.status(200).send(svg)
             }, function(err) {
               console.log("nope")
               doit();
