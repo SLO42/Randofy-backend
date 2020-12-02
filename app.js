@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -9,6 +10,7 @@ var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var randomSongRouter = require('./routes/randomSong');
 
+var app = express();
 var app = express();
 var SpotifyWebApi = require('spotify-web-api-node');
 
@@ -58,7 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   req.spotify = spotifyApi;
   const d1 = new Date();
-  
+
   // refresh token as needed
   if (d1.getTime() >= expires_at.getTime() ){
     spotifyApi.refreshAccessToken().then(
