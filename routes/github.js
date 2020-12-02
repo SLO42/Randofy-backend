@@ -64,6 +64,7 @@ router.get('/', function(req, res, next) {
                     </a>
                     </svg>`;
                     res.set('Content-Type', 'image/svg+xml');
+                    res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
                     res.send(svg);
                     }
             )
