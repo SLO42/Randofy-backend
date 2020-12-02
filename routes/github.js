@@ -1,4 +1,4 @@
-
+const imageToBase64 = require('image-to-base64');
 var express = require('express');
 var router = express.Router();
 
@@ -48,17 +48,30 @@ router.get('/', function(req, res, next) {
                 "attempts": att,
               };
 
-              const svg = `<svg aria-hidden="true" viewbox='0 0 500 100' role="img" xmlns="http://www.w3.org/2000/svg" height="100%" width="100%">
-                <a href='${returnData.spotify_url}'>
-                    <text overflow-wrap='normal' y='20'>
-                    Album: '${returnData.album_name}' |
-                    Song:  '${returnData.track_name}'
-                    </text >
-                    <image y="40" href='${returnData.album_image.url}'  height="${returnData.album_image.height}" width="${returnData.album_image.width}"/>
-                </a>
-            </svg>`;
-            res.set('Content-Type', 'image/svg+xml');
-            res.send(svg);
+              imageToBase64(returnData.album_image.url) // Image URL
+               .then(
+                (response) => {
+                    console.log(response)
+                    const svg = `<svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="100%" width="100%">
+                    <a href='${returnData.spotify_url}'>
+                        <text overflow-wrap='normal' y='20'>
+                        Album: '${returnData.album_name}' 
+                        </text >
+                        <text overflow-wrap='normal' y='35' >
+                        Song:  '${returnData.track_name}'
+                        </text >
+                        <image y="40" href='data:image/jpeg;base64,${response}'  height="${returnData.album_image.height}" width="${returnData.album_image.width}"/>
+                    </a>
+                    </svg>`;
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(svg);
+                    }
+            )
+            .catch(
+                (error) => {
+                    console.log(error); // Logs an error if there was one
+                }
+            )
               // res.contentType('image/svg+xml');
               // res.status(200).send(svg)
             }, function(err) {
