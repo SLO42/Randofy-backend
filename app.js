@@ -9,9 +9,10 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var randomSongRouter = require('./routes/randomSong');
+var githubRouter = require('./routes/github');
 
 var app = express();
-var app = express();
+app.use(cors());
 var SpotifyWebApi = require('spotify-web-api-node');
 
 // spotify vars 
@@ -83,7 +84,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter)
 app.use('/random', randomSongRouter);
-
+app.use('/github', githubRouter);
 
 
 // catch 404 and forward to error handler
