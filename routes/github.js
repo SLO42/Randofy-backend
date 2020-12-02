@@ -1,3 +1,4 @@
+const { convert } = require('convert-svg-to-png');
 var express = require('express');
 var router = express.Router();
 
@@ -35,8 +36,7 @@ router.get('/', function(req, res, next) {
     function retry() {
       let randomOffset = Math.floor(Math.random() * 10000);
         req.spotify.searchTracks(search,{ limit: 1, offset: randomOffset})
-        .then(function(data) {
-            console.log(data.body.tracks.items[0].album.images[2]);
+        .then(async function(data) {
               let returnData = {
                 "album_name": data.body.tracks.items[0].album.name,
                 "album_image": data.body.tracks.items[0].album.images[2],
@@ -47,7 +47,6 @@ router.get('/', function(req, res, next) {
                 "is_explicit": data.body.tracks.items[0].explicit,
                 "attempts": att,
               };
-              console.log(returnData);
 
               const svg = `<svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="100%" width="100%">
               <a href=${returnData.spotify_url}>
@@ -58,7 +57,12 @@ router.get('/', function(req, res, next) {
                  <image y="40" href=${returnData.album_image.url}  height="${returnData.album_image.height}" width="${returnData.album_image.width}"/>
               </a>
          </svg>`
-              res.status(200).send(svg)
+         await convert(svg, {'width': '500px', 'height': '500px'}).then(png => {
+          res.set('Content-Type', 'image/svg+xml');
+          res.send(png);
+         }).catch(error => console.log(error))
+              // res.contentType('image/svg+xml');
+              // res.status(200).send(svg)
             }, function(err) {
               console.log("nope")
               doit();
