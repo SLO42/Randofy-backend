@@ -51,21 +51,29 @@ router.get('/', function(req, res, next) {
               imageToBase64(returnData.album_image.url) // Image URL
                .then(
                 (response) => {
-                    console.log(response)
-                    const svg = `<svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="100%" width="100%">
-                    <a href='${returnData.spotify_url}'>
-                        <text overflow-wrap='normal' y='20'>
-                        Album: '${returnData.album_name}' 
-                        </text >
-                        <text overflow-wrap='normal' y='35' >
-                        Song:  '${returnData.track_name}'
-                        </text >
-                        <image y="40" href='data:image/jpeg;base64,${response}'  height="${returnData.album_image.height}" width="${returnData.album_image.width}"/>
-                    </a>
-                    </svg>`;
-                    res.set('Content-Type', 'image/svg+xml');
-                    res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
-                    res.send(svg);
+                  const svg = `<svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="100%" width="100%">
+                  <a href='${returnData.spotify_url}'>
+                      <text overflow-wrap='normal' y='20'>
+                      Album: '${returnData.album_name.replace('&', 'and')}' 
+                      </text >
+                      <text overflow-wrap='normal' y='35' >
+                      Song:  '${returnData.track_name.replace('&', 'and')}'
+                      </text >
+                      <text overflow-wrap='normal' y='120' >
+                      Explicit?  ${returnData.is_explicit ? 'true' : 'false'}
+                      </text >
+                      <image y="40" href='data:image/jpeg;base64,${response}'  height="${returnData.album_image.height}" width="${returnData.album_image.width}"/>
+                  </a>
+                  <a href='${returnData.spotify_url}'>
+                      <text overflow-wrap='normal' y='140'>
+                      Click me to listen on Spotify
+                      </text >
+                  </a>
+                  ${returnData.preview_url ? `<video href='${returnData.preview_url}' />` : null}
+                  </svg>`;
+                  res.set('Content-Type', 'image/svg+xml');
+                  res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
+                  res.send(svg);
                     }
             )
             .catch(
