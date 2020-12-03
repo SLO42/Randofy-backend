@@ -84,7 +84,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter)
 app.use('/random', randomSongRouter);
-app.use('/github', githubRouter);
+app.use('/markdown', githubRouter);
 
 
 // catch 404 and forward to error handler
