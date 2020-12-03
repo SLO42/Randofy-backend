@@ -69,7 +69,6 @@ router.get('/', function(req, res, next) {
                       Click me to listen on Spotify
                       </text >
                   </a>
-                  ${returnData.preview_url ? `<video href='${returnData.preview_url}' />` : null}
                   </svg>`;
                   res.set('Content-Type', 'image/svg+xml');
                   res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
