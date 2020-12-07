@@ -2,7 +2,7 @@
 
 refresh the page for a new song! 
 
-![randomSong](https://randify-backend.herokuapp.com/markdown) 
+![randomSong](https://randify-backend.herokuapp.com/svg-s) 
 
 Spotify song randomizer backend for future frontend use
 
