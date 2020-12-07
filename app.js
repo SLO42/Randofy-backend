@@ -88,8 +88,10 @@ const ROUTES = {
   '/': 'Home Page',
   '/login': 'login route using Spotify 20Auth',
   '/random': 'generates random song',
-  '/markdown': 'generates markdown complient svg of random song'
-
+  '/markdown': 'generates markdown complient svg of random song',
+  '/svg-s': 'generates small svg of a random song',
+  '/svg-m': 'generates medium svg of a random song',
+  '/svg-l': 'generates large svg of a random song',
 };
 
 // routes after above middleware.

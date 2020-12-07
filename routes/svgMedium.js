@@ -43,14 +43,12 @@ function createSVG(base64Image, imageData, songData){
 
 router.get('/', function(req, res, next) {
     let search = getRandomSearch();
-    // console.log("Search", search)
     let att = 0;
     function doit() {
       att++;
       if (att >= 50){
         search = getRandomSearch();
       }
-        console.log("attempt number: ", att );
         retry();
     }
     function retry() {
@@ -96,7 +94,6 @@ router.get('/', function(req, res, next) {
                 })
             }
         }, function(err) {
-            console.log("nope")
             doit();
         })};
     doit();
