@@ -7,8 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('heroku-backend:server');
 var http = require('http');
-
-
 require('dotenv').config();
 
 

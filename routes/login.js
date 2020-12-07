@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/a', function(req, res, next) {
-    res.send(`<p>testing</p>`);
- });
+   res.send(`<p>testing</p>`);
+});
 
 module.exports = router;

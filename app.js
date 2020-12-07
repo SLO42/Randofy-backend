@@ -6,29 +6,38 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var randomSongRouter = require('./routes/randomSong');
-var githubRouter = require('./routes/github');
+var markdownRouter = require('./routes/markdown');
 
+require('dotenv').config();
 var app = express();
 app.use(cors());
+
 var SpotifyWebApi = require('spotify-web-api-node');
 
-// spotify vars 
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+
 var clientId = process.env.SPOT_ID,
   clientSecret = process.env.SPOT_SECRET;
 var redirect_uri = 'localhost:8888';
 
-// create spotify object
+// create the spotifyWebApi object
 var spotifyApi = new SpotifyWebApi({
   clientId: clientId,
   clientSecret: clientSecret
 });
 
-// get spotify creds
-
 let expires_at;
+
+
+// grab client creds for the first time on app launch
 
 spotifyApi.clientCredentialsGrant().then(
   function(data) {
@@ -47,21 +56,12 @@ spotifyApi.clientCredentialsGrant().then(
   }
 );
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
+// middleware for sending spotify object to routes as needed
+// can refresh Spotify Access token as needed
 
 app.use((req, res, next) => {
   req.spotify = spotifyApi;
   const d1 = new Date();
-
   // refresh token as needed
   if (d1.getTime() >= expires_at.getTime() ){
     spotifyApi.refreshAccessToken().then(
@@ -76,16 +76,24 @@ app.use((req, res, next) => {
       }
     );
   }
-  //spotify token check on any route
   next();
 })
 
+
+// routes with a desc
+const ROUTES = {
+  '/': 'Home Page',
+  '/login': 'login route using Spotify 20Auth',
+  '/random': 'generates random song',
+  '/markdown': 'generates markdown complient svg of random song'
+
+};
+
+// routes after above middleware.
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/login', loginRouter)
 app.use('/random', randomSongRouter);
-app.use('/markdown', githubRouter);
-
+app.use('/markdown', markdownRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -98,10 +106,19 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
+  let returnHTML = '<h1>Page Not Found (404) </h1> <h2> Available Routes: </h2> <ul>';
+  console.log(ROUTES)
+  Object.keys(ROUTES).map((key, index) => {
+    console.log(key, index);
+    returnHTML += `<li key=${index}> <a href="${key}"> <p>${key}: ${ROUTES[key]} </p> </a> </li>`;
+  })
+  returnHTML += '</ul>'
+
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(returnHTML);
 });
+
 
 
 
