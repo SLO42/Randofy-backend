@@ -7,7 +7,7 @@ Example |
 ![randomSong](https://randify-backend.herokuapp.com/svg-s) |
 refresh the page for a new song!  
 
-**Randify-backend**
+**Random**
 ----
    Fetch a random song with Randify! 
 
