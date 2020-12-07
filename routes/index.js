@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
     returnHTML += `<li key=${index}> <a href="${key}"> <p>${key}: ${ROUTES[key]} </p> </a> </li>`;
   })
   returnHTML += '</ul>';
-  returnHTML += '<a href="https://github.com/settleformore" target="_blank"> <h3>Idea by <strong> Sabrina Settle </strong> </h3> </a>' ;
+  returnHTML += '<a href="https://github.com/settleformore" target="_blank"> <h3>Idea by and contributions  <strong> Sabrina Settle </strong> </h3> </a>' ;
   returnHTML += '<a href="https://github.com/SLO42" target="_blank"> <h3>Backend created by <strong> Samuel Oliveira </strong> </h3> </a>' ;
 
   res.status(200).send(returnHTML);
