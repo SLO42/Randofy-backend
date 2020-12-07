@@ -79,7 +79,7 @@ router.get('/', function(req, res, next) {
             if (data.body.tracks.items[0].album.available_markets.includes(req.ipInfo.country) || ip === '::1'){
                 let returnData = {
                 "album_name": data.body.tracks.items[0].album.name,
-                "album_image": data.body.tracks.items[0].album.images[1],
+                "album_image": data.body.tracks.items[0].album.images[2],
                 "track_artist": data.body.tracks.items[0].artists[0].name,
                 "track_name": data.body.tracks.items[0].name,
                 "preview_url": data.body.tracks.items[0].preview_url,
