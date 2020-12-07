@@ -4,7 +4,8 @@ refresh the page for a new song!
 
 Example |
 ------- |
-![randomSong](https://randify-backend.herokuapp.com/svg-s)
+![randomSong](https://randify-backend.herokuapp.com/svg-s) |
+refresh the page for a new song!  
 
 
 Spotify song randomizer backend for future frontend use
