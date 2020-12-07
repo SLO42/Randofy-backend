@@ -9,6 +9,9 @@ var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var randomSongRouter = require('./routes/randomSong');
 var markdownRouter = require('./routes/markdown');
+var svgSmall = require('./routes/svgSmall');
+var svgMedium = require('./routes/svgMedium');
+var svgLarge = require('./routes/svgLarge');
 
 require('dotenv').config();
 var app = express();
@@ -94,6 +97,9 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter)
 app.use('/random', randomSongRouter);
 app.use('/markdown', markdownRouter);
+app.use('/svg-s', svgSmall);
+app.use('/svg-m', svgMedium);
+app.use('/svg-l', svgLarge);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
