@@ -115,9 +115,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   let returnHTML = '<h1>Page Not Found (404) </h1> <h2> Available Routes: </h2> <ul>';
-  console.log(ROUTES)
   Object.keys(ROUTES).map((key, index) => {
-    console.log(key, index);
     returnHTML += `<li key=${index}> <a href="${key}"> <p>${key}: ${ROUTES[key]} </p> </a> </li>`;
   })
   returnHTML += '</ul>'
