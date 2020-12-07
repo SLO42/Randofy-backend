@@ -21,8 +21,6 @@ refresh the page for a new song!
   
 * **Success Response:**
   
-  <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
-
   * **Code:** 200 <br />
     **Content:** `{"album_name":"random song","album_image":{"height":300,"url":"https://linkToPublicImage","width":300},"track_artist":"Hozier","track_name":"Almost (Sweet Music)","preview_url":"nullOrhttps://linkToPublicSongPreview","spotify_url":"https://OpenSpotify","is_explicit":true,"attempts":5}%`
  
@@ -46,6 +44,5 @@ refresh the page for a new song!
 
 * **Notes:**
 
-  <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._>
-
+   
 backend can be found at : https://randify-backend.herokuapp.com/
