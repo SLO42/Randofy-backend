@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "NODE_ENV=dev nodemon ./bin/www",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -17,5 +18,8 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "spotify-web-api-node": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

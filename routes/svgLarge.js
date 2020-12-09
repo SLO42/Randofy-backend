@@ -74,7 +74,7 @@ router.get('/', function(req, res, next) {
             var xForwardedFor = (req.headers['x-forwarded-for'] || '').replace(/:\d+$/, '');
             var ip = xForwardedFor || req.connection.remoteAddress;
             req.ipInfo = { ip, ...getIpInfo(ip) };
-            if (data.body.tracks.items[0].album.available_markets.includes(req.ipInfo.country) || ip === '::1'){
+            if (data.body.tracks.items[0].album.available_markets.includes(req.ipInfo.country) || process.env.NODE_ENV === "dev"){
                 let returnData = {
                 "album_name": data.body.tracks.items[0].album.name,
                 "album_image": data.body.tracks.items[0].album.images[0],

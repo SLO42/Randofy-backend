@@ -13,6 +13,8 @@ var svgSmall = require('./routes/svgSmall');
 var svgMedium = require('./routes/svgMedium');
 var svgLarge = require('./routes/svgLarge');
 
+var getRandomSearch = require('./lib/js/helpers/randomLib').getRandomSearch;
+
 require('dotenv').config();
 var app = express();
 app.use(cors());
@@ -64,6 +66,7 @@ spotifyApi.clientCredentialsGrant().then(
 
 app.use((req, res, next) => {
   req.spotify = spotifyApi;
+
   const d1 = new Date();
   // refresh token as needed
   if (d1.getTime() >= expires_at.getTime() ){
