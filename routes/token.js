@@ -1,32 +1,29 @@
 var express = require('express');
 var router = express.Router();
 var axios = require('axios');
-var btoa = require('btoa');
 
-var clientId = process.env.SPOT_ID,
-  clientSecret = process.env.SPOT_SECRET;
-var auth_str = btoa(`${clientId}:${clientSecret}`)
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-
-
+  /* GET home page. */
+  router.get('/', function(req, res, next) {
+      console.log("what?")
+    console.log("param check", req.query[0]);
+    const code = req.query[0];
+    console.log(code);
     axios.post("https://accounts.spotify.com/api/token",
-    `grant_type=authorization_code&code=${req.body.code}&redirect_uri=${decodeURIComponent("https://randify.vercel.app")}`,
+    `grant_type=client_credentials&code=${encodeURIComponent(code)}&redirect_uri=${decodeURIComponent("https://randify.vercel.app")}&client_id=${req.spotify._credentials.clientId}&client_secret=${req.spotify._credentials.clientSecret}`,
     {
-        Authorization: `Basic ${auth_str}`
+        'Content_Type': 'application/x-www-form-urlencoded',
+        'Access-Control-Allow-Header': '*',
+        'Cache-Control': 'no-cache',
     })
     .then(response => {
-        res.status(200).send(response)
+        console.log("data", response.data);
+        res.status(200).send(response.data)
     })
     .catch(error => {
-        res.status(error.code).send(error)
+        console.log("error", error.response);
+        res.status(error.response.status).send(error.response.data)
     })
-    // req.spotify.getMe((data) => {
 
-    //     console.log(data);
-    //     res.status(200).send(data);
-    // })
 });
 
 module.exports = router;
