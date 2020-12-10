@@ -2,10 +2,9 @@ var express = require('express');
 var router = express.Router();
 var axios = require('axios');
 
-base64.b64encode
 var clientId = process.env.SPOT_ID,
   clientSecret = process.env.SPOT_SECRET;
-var auth_str = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)
+var auth_str = btoa(`${clientId}:${clientSecret}`)
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
