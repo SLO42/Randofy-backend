@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var axios = require('axios');
+var btoa = require('btoa');
 
 var clientId = process.env.SPOT_ID,
   clientSecret = process.env.SPOT_SECRET;
