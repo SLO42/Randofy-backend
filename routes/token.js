@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
         Authorization: `Basic ${auth_str}`
     })
     .then(response => {
-        res.status(200).send(data)
+        res.status(200).send(response)
     })
     .catch(error => {
         res.status(error.code).send(error)
