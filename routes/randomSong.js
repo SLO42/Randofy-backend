@@ -64,7 +64,7 @@ getData = (req, max, callback) => {
       req.ipInfo = { ip, ...getIpInfo(ip) };
       const item = data.body.tracks.items[0];
       if ( ( item && item.album.available_markets.includes(req.ipInfo.country) )|| process.env.NODE_ENV === "dev" && item ){
-        console.log("passed", item);
+        console.log(item.id);
         let returnData = {
           "album_name": item.album.name,
           "album_image": item.album.images[1],
@@ -73,6 +73,7 @@ getData = (req, max, callback) => {
           "preview_url": item.preview_url,
           "spotify_url": item.external_urls.spotify,
           "is_explicit": item.explicit,
+          "track_id": item.id,
           "attempts": att,
         };
         if (max === 1){
@@ -96,7 +97,6 @@ getData = (req, max, callback) => {
         doit();
       }
       }, function(err) {
-        console.log("nope")
         doit();
     })};
   doit();
