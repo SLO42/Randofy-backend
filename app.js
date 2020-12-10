@@ -12,7 +12,7 @@ var markdownRouter = require('./routes/markdown');
 var svgSmall = require('./routes/svgSmall');
 var svgMedium = require('./routes/svgMedium');
 var svgLarge = require('./routes/svgLarge');
-var getme = require('./routes/getme');
+var token = require('./routes/token');
 
 var getRandomSearch = require('./lib/js/helpers/randomLib').getRandomSearch;
 
@@ -106,7 +106,7 @@ app.use('/markdown', markdownRouter);
 app.use('/svg-s', svgSmall);
 app.use('/svg-m', svgMedium);
 app.use('/svg-l', svgLarge);
-app.use('/getme', getme);
+app.use('/token', token);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
