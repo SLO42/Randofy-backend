@@ -21,7 +21,8 @@ function replacer(str) {
 function createSVG(base64Image, imageData, songData){
     return(
         `<svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="100%" width="100%">
-            <a href='${songData.spotify_url}' target='_blank'>
+        <style>svg { background-color: white; }</style>
+            <a href='${songData.spotify_url}' target='_blank'>     
                 <text overflow-wrap='normal' y='${15}'>
                 Album: '${replacer(songData.album_name)}' 
                 </text >
