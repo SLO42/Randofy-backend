@@ -4,8 +4,6 @@ var axios = require('axios');
 
   /* GET home page. */
   router.get('/', function(req, res, next) {
-      console.log("what?")
-    console.log("param check", req.query[0]);
     const code = req.query[0];
     console.log(code);
     axios.post("https://accounts.spotify.com/api/token",
