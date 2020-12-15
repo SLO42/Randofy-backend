@@ -50,6 +50,7 @@ spotifyApi.clientCredentialsGrant().then(
     console.log('The access token is ' + data.body['access_token']);
     spotifyApi.setAccessToken(data.body['access_token']);
     spotifyApi.setRefreshToken(data.body['refresh_token']);
+    console.log(data.body['refresh_token'])
     let d = new Date();
     console.log("now: ", d);
     expires_at = new Date(d.setHours((d.getHours() + 1)));
