@@ -45,23 +45,24 @@ let expires_at;
 
 // grab client creds for the first time on app launch
 
-spotifyApi.clientCredentialsGrant().then(
-  function(data) {
-    console.log('The access token is ' + data.body['access_token']);
-    spotifyApi.setAccessToken(data.body['access_token']);
-    spotifyApi.setRefreshToken(data.body['refresh_token']);
-    console.log(data.body['refresh_token'])
-    let d = new Date();
-    console.log("now: ", d);
-    expires_at = new Date(d.setHours((d.getHours() + 1)));
+const setTokens = () => {
+  spotifyApi.clientCredentialsGrant().then(
+    function(data) {
+      console.log('The access token is ' + data.body['access_token']);
+      spotifyApi.setAccessToken(data.body['access_token']);
+      let d = new Date();
+      console.log("now: ", d);
+      expires_at = new Date(d.setHours((d.getHours() + 1)));
+  
+      console.log("Expires at: ", expires_at)
+    },
+    function(err) {
+      console.log('Something went wrong!', err);
+    }
+  );
+}
 
-    console.log("Expires at: ", expires_at)
-    console.log(data.body);
-  },
-  function(err) {
-    console.log('Something went wrong!', err);
-  }
-);
+setTokens();
 
 // middleware for sending spotify object to routes as needed
 // can refresh Spotify Access token as needed
@@ -72,17 +73,7 @@ app.use((req, res, next) => {
   const d1 = new Date();
   // refresh token as needed
   if (d1.getTime() >= expires_at.getTime() ){
-    spotifyApi.refreshAccessToken().then(
-      function(data) {
-        console.log('The access token has been refreshed!');
-    
-        // Save the access token so that it's used in future calls
-        spotifyApi.setAccessToken(data.body['access_token']);
-      },
-      function(err) {
-        console.log('Could not refresh access token', err);
-      }
-    );
+    setTokens();
   }
   next();
 })
