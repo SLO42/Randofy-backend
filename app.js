@@ -45,7 +45,7 @@ let expires_at;
 
 // grab client creds for the first time on app launch
 
-const setTokens = () => {
+const setTokens = (callback) => {
   spotifyApi.clientCredentialsGrant().then(
     function(data) {
       console.log('The access token is ' + data.body['access_token']);
@@ -60,9 +60,10 @@ const setTokens = () => {
       console.log('Something went wrong!', err);
     }
   );
+  if (callback) callback();
 }
 
-setTokens();
+setTokens(null);
 
 // middleware for sending spotify object to routes as needed
 // can refresh Spotify Access token as needed
@@ -73,9 +74,11 @@ app.use((req, res, next) => {
   const d1 = new Date();
   // refresh token as needed
   if (d1.getTime() >= expires_at.getTime() ){
-    setTokens();
+    setTokens(next());
   }
-  next();
+  else {
+    next();
+  }
 })
 
 
