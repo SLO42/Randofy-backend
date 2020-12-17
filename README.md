@@ -1,15 +1,15 @@
-# Randify-backend
+# randofy-backend
 
 refresh the page for a new song! 
 
 Example |
 ------- |
-![randomSong](https://randify-backend.herokuapp.com/svg-s) |
+![randomSong](https://randofy-backend.herokuapp.com/svg-s) |
 refresh the page for a new song!  
 
 **Random**
 ----
-   Fetch a random song with Randify! 
+   Fetch a random song with randofy! 
 
 * **URL**
 
@@ -33,16 +33,16 @@ refresh the page for a new song!
 
 * **Sample Call:**
 
-  `curl https://randify-backend.herokuapp.com/random`
+  `curl https://randofy-backend.herokuapp.com/random`
 
   OR
 
   ```javascript
-    fetch('https://randify-backend.herokuapp.com/random')
+    fetch('https://randofy-backend.herokuapp.com/random')
     .then(response => ...);
   ```
 
 * **Notes:**
 
    
-backend can be found at : https://randify-backend.herokuapp.com/
+backend can be found at : https://randofy-backend.herokuapp.com/

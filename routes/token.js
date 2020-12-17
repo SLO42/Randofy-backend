@@ -7,7 +7,7 @@ var axios = require('axios');
     const code = req.query[0];
     console.log(code);
     axios.post("https://accounts.spotify.com/api/token",
-    `grant_type=client_credentials&code=${encodeURIComponent(code)}&redirect_uri=${decodeURIComponent("https://randify.vercel.app")}&client_id=${req.spotify._credentials.clientId}&client_secret=${req.spotify._credentials.clientSecret}`,
+    `grant_type=client_credentials&code=${encodeURIComponent(code)}&redirect_uri=${decodeURIComponent("https://randofy.vercel.app")}&client_id=${req.spotify._credentials.clientId}&client_secret=${req.spotify._credentials.clientSecret}`,
     {
         'Content_Type': 'application/x-www-form-urlencoded',
         'Access-Control-Allow-Header': '*',

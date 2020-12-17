@@ -3,7 +3,7 @@ var router = express.Router();
 
 
 var clientId = process.env.SPOT_ID;
-var redirect_uri = process.env.NODE_ENV === 'dev' ? 'localhost:3000' : 'https://randify.vercel.app/';
+var redirect_uri = process.env.NODE_ENV === 'dev' ? 'localhost:3000' : 'https://randofy.vercel.app/';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
