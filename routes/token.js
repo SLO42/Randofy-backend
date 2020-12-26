@@ -5,9 +5,9 @@ var axios = require('axios');
   /* GET home page. */
   router.get('/', function(req, res, next) {
     const code = req.query.code;
-    console.log("url: ", `grant_type=authorization_code&code=${encodeURIComponent(code)}&redirect_uri=${decodeURIComponent("https://randofy.vercel.app")}&client_id=${req.spotify._credentials.clientId}&client_secret=${req.spotify._credentials.clientSecret}`);
+    console.log("url: ", `grant_type=authorization_code&code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent("https://randofy.vercel.app")}&client_id=${req.spotify._credentials.clientId}&client_secret=${req.spotify._credentials.clientSecret}`);
     axios.post("https://accounts.spotify.com/api/token",
-    `grant_type=authorization_code&code=${encodeURIComponent(code)}&redirect_uri=${decodeURIComponent("https://randofy.vercel.app/")}&client_id=${req.spotify._credentials.clientId}&client_secret=${req.spotify._credentials.clientSecret}`,
+    `grant_type=authorization_code&code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent("https://randofy.vercel.app/")}&client_id=${req.spotify._credentials.clientId}&client_secret=${req.spotify._credentials.clientSecret}`,
     {
         'Content_Type': 'application/x-www-form-urlencoded',
         'Access-Control-Allow-Header': '*',
