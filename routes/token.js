@@ -5,7 +5,7 @@ var axios = require('axios');
   /* GET home page. */
   router.get('/', function(req, res, next) {
     const code = req.query.code;
-    console.log("url: ", `grant_type=authorization_code&code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent("https://randofy.vercel.app")}&client_id=${req.spotify._credentials.clientId}&client_secret=${req.spotify._credentials.clientSecret}`);
+    console.log("url: ", `grant_type=authorization_code&code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent("https://randofy.vercel.app/")}&client_id=${req.spotify._credentials.clientId}&client_secret=${req.spotify._credentials.clientSecret}`);
     axios.post("https://accounts.spotify.com/api/token",
     `grant_type=authorization_code&code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent("https://randofy.vercel.app/")}&client_id=${req.spotify._credentials.clientId}&client_secret=${req.spotify._credentials.clientSecret}`,
     {
@@ -14,7 +14,7 @@ var axios = require('axios');
         'Cache-Control': 'no-cache',
     })
     .then(response => {
-        console.log("data", response);
+        console.log("data", response.data);
         res.status(200).send(response.data)
     })
     .catch(error => {
