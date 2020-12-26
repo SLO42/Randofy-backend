@@ -14,7 +14,7 @@ var axios = require('axios');
         'Cache-Control': 'no-cache',
     })
     .then(response => {
-        console.log("data", response.data);
+        console.log("data", response);
         res.status(200).send(response.data)
     })
     .catch(error => {
