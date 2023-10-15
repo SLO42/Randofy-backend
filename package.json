@@ -2,11 +2,11 @@
   "name": "randofy-api",
   "version": "1.0.0",
   "description": "api for randofy frontend",
-  "main": "src/index.mjs",
+  "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.mjs",
-    "dev": "nodemon --experimental-specifier-resolution=node src/index.mjs"
+    "start": "node index.mjs",
+    "dev": "nodemon --experimental-specifier-resolution=node index.mjs"
   },
   "author": "",
   "license": "ISC",

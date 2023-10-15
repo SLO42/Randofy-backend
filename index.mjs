@@ -21,9 +21,9 @@ import * as dotenv from "dotenv";
 import express from "express";
 dotenv.config();
 // import cors from "cors";
-import SpotifyClient from "./spotify-api/index.mjs";
+import SpotifyClient from "./src/spotify-api/index.mjs";
 
-import ROUTERS from "./routes/index.mjs";
+import ROUTERS from "./src/routes/index.mjs";
 
 const app = express();
 app.listen(3333);
