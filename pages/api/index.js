@@ -38,11 +38,6 @@ export const currentRoutes = {
 //   next();
 // });
 
-import SpotifyClient from "/pages/src/spotify-api/index.mjs";
-const client_id = process.env["SPOTIFY_CLIENT_ID"];
-const client_secret = process.env["SPOTIFY_SECRET"];
-const spotifyApi = new SpotifyClient(client_id, client_secret);
-
 export default function handler(req, res) {
   let returnHTML =
     "<h1>Randofy Backend Api </h1> <h2> Available Routes: </h2> <ul>";
