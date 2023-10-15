@@ -30,6 +30,9 @@ export const currentRoutes = {
   RANDOM: ["api/random", "generates random song"],
   MARKDOWN: ["api/markdown", "generates markdown compliant svg of random song"],
   TOKEN: ["api/token", "generates token for Spotify 2OAuth"],
+  SVG_S: ["api/svg-s", "generates small svg of a random song"],
+  SVG_M: ["api/svg-m", "generates medium svg of a random song"],
+  SVG_L: ["api/svg-l", "generates large svg of a random song"],
 };
 
 // app.use((req, res, next) => {

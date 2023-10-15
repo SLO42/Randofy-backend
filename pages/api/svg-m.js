@@ -18,25 +18,24 @@ function replacer(str) {
 
 function createSVG(base64Image, imageData, songData) {
   return `<svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="100%" width="100%">
-        <style>svg { background-color: white; }</style>
-            <a href='${songData.spotify_url}' target='_blank'>     
-                <text overflow-wrap='normal' y='${15}'>
-                Album: '${replacer(songData.album_name)}' 
-                </text >
-                <text overflow-wrap='normal' y='${30}'>
-                Artist(s): '${replacer(songData.track_artist)}' 
-                </text >
-                <text overflow-wrap='normal' y='${45}' >
-                Song:  '${replacer(songData.track_name)}'
-                </text >
-                <text overflow-wrap='normal' y='${50 + imageData.height + 15}' >
-                Explicit?  ${songData.is_explicit ? "true" : "false"}
-                </text >
-                <image y="${50}" href='data:image/jpeg;base64,${base64Image}'  height="${
+  <a href='${songData.spotify_url}' target='_blank'>
+      <text overflow-wrap='normal' y='${15}'>
+      Album: '${replacer(songData.album_name)}' 
+      </text >
+      <text overflow-wrap='normal' y='${30}'>
+      Artist(s): '${replacer(songData.track_artist)}' 
+      </text >
+      <text overflow-wrap='normal' y='${45}' >
+      Song:  '${replacer(songData.track_name)}'
+      </text >
+      <text overflow-wrap='normal' y='${50 + imageData.height + 15}' >
+      Explicit?  ${songData.is_explicit ? "true" : "false"}
+      </text >
+      <image y="${50}" href='data:image/jpeg;base64,${base64Image}'  height="${
     imageData.height
   }" width="${imageData.width}"/>
-            </a>
-        </svg>`;
+  </a>
+</svg>`;
 }
 
 export const config = {

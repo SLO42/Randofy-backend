@@ -37,7 +37,7 @@ const getData = (req, max, callback) => {
 
   // new regex(/^:+[a-zA-Z]*:)
   function retry() {
-    let randomOffset = Math.floor(Math.random() * 10000);
+    let randomOffset = Math.floor(Math.random() * 10);
     spotifyApi
       .searchTracks(search, { limit: 1, offset: randomOffset, method: "GET" })
       .then(
