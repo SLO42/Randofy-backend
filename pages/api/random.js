@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import geoip from "geoip-lite";
-import getRandomSearch from "../src/lib/js/helpers/randomLib.mjs";
+import getRandomSearch from "../../helpers/randomLib.mjs";
 import { spotifyApi } from "../src/spotify-api/SpotifyClient.mjs";
 
 /* GET home page. */

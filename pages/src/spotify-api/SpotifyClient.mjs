@@ -1,4 +1,4 @@
-import { GlobalRef } from "../lib/js/helpers/GlobalRef.js";
+import { GlobalRef } from "../../../helpers/GlobalRef.js";
 class SpotifyClient {
   client_id = "";
   client_secret = "";
