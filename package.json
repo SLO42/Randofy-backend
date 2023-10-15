@@ -29,6 +29,6 @@
     "watch": [
       "src"
     ],
-    "ext": "mjs"
+    "ext": "js"
   }
 }
