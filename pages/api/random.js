@@ -71,10 +71,12 @@ const getData = (req, max, callback) => {
           // );
           // var ip = xForwardedFor || req.connection.remoteAddress;
           // req.ipInfo = { ip, ...getIpInfo(ip) };
+          const country = req.headers["x-vercel-ip-country"];
           const item = tracks.items[0];
           if (
-            item ||
-            // && item.album.available_markets.includes(req.ipInfo.country)
+            (country &&
+              item &&
+              item.album.available_markets.includes(country)) ||
             (process.env.NODE_ENV === "development" && item)
           ) {
             // console.log(item.id);

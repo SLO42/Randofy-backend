@@ -92,12 +92,10 @@ export default function handler(req, res) {
           //   /:\d+$/,
           //   ""
           // );
+          const country = req.headers["x-vercel-ip-country"];
           if (
-            (req.ipInfo &&
-              req.ipInfo.country &&
-              tracks.items[0].album.available_markets.includes(
-                req.ipInfo.country
-              )) ||
+            (country &&
+              tracks.items[0].album.available_markets.includes(country)) ||
             process.env.NODE_ENV === "development"
           ) {
             let returnData = {
