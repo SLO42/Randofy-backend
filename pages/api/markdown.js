@@ -1,5 +1,5 @@
 import getRandomSearch from "../../lib/js/helpers/randomLib.mjs";
-import geoip from "geoip-lite";
+// import geoip from "geoip-lite";
 import imageToBase64 from "image-to-base64";
 import { spotifyApi } from "../src/spotify-api/SpotifyClient.mjs";
 
@@ -40,6 +40,7 @@ function createSVG(base64Image, imageData, songData) {
 }
 
 export default function handler(req, res) {
+  console.log(req.headers);
   if (!spotifyApi) {
     // throw new Error("No Spotify API");
     return res.status(500).send("No Spotify API");
@@ -69,32 +70,31 @@ export default function handler(req, res) {
           if (!tracks || tracks.total === 0) {
             return doit();
           }
-          const getIpInfo = function (ip) {
-            // IPV6 addresses can include IPV4 addresses
-            // So req.ip can be '::ffff:86.3.182.58'
-            // However geoip-lite returns null for these
-            if (ip.includes("::ffff:")) {
-              ip = ip.split(":").reverse()[0];
-            }
-            if (ip === "127.0.0.1" || ip === "::1") {
-              return { error: "This won't work on localhost" };
-            }
-            var lookedUpIP = geoip.lookup(ip);
-            if (!lookedUpIP) {
-              return {
-                error: "Error occured while trying to process the information",
-              };
-            }
-            return lookedUpIP;
-          };
-          var xForwardedFor = (req.headers["x-forwarded-for"] || "").replace(
-            /:\d+$/,
-            ""
-          );
-          var ip = xForwardedFor || req.connection.remoteAddress;
-          req.ipInfo = { ip, ...getIpInfo(ip) };
+          // const getIpInfo = function (ip) {
+          //   // IPV6 addresses can include IPV4 addresses
+          //   // So req.ip can be '::ffff:86.3.182.58'
+          //   // However geoip-lite returns null for these
+          //   if (ip.includes("::ffff:")) {
+          //     ip = ip.split(":").reverse()[0];
+          //   }
+          //   if (ip === "127.0.0.1" || ip === "::1") {
+          //     return { error: "This won't work on localhost" };
+          //   }
+          //   var lookedUpIP = geoip.lookup(ip);
+          //   if (!lookedUpIP) {
+          //     return {
+          //       error: "Error occured while trying to process the information",
+          //     };
+          //   }
+          //   return lookedUpIP;
+          // };
+          // var xForwardedFor = (req.headers["x-forwarded-for"] || "").replace(
+          //   /:\d+$/,
+          //   ""
+          // );
           if (
-            (req.ipInfo.country &&
+            (req.ipInfo &&
+              req.ipInfo.country &&
               tracks.items[0].album.available_markets.includes(
                 req.ipInfo.country
               )) ||
