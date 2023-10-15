@@ -68,13 +68,14 @@ class SpotifyClient {
   }
 }
 
+const spotify = new GlobalRef("spotifyClient");
 const setGlobalVar = () => {
   const client_id = process.env["SPOTIFY_CLIENT_ID"];
   const client_secret = process.env["SPOTIFY_SECRET"];
-  return new SpotifyClient(client_id, client_secret);
+  if (!spotify.value) {
+    return new SpotifyClient(client_id, client_secret);
+  }
 };
-
-const spotify = new GlobalRef("spotifyClient");
 if (!spotify.value) {
   spotify.value = setGlobalVar();
 }
