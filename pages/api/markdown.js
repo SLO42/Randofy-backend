@@ -1,8 +1,7 @@
-import express, { response } from "express";
-const router = express.Router();
-import getRandomSearch from "../lib/js/helpers/randomLib.mjs";
+import getRandomSearch from "../src/lib/js/helpers/randomLib.mjs";
 import geoip from "geoip-lite";
 import imageToBase64 from "image-to-base64";
+import { spotifyApi } from "../src/spotify-api/SpotifyClient.mjs";
 
 const replaceList = [
   ["&", "&amp;"],
@@ -40,7 +39,11 @@ function createSVG(base64Image, imageData, songData) {
         </svg>`;
 }
 
-router.get("/", function (req, res, next) {
+export default function handler(req, res) {
+  if (!spotifyApi) {
+    // throw new Error("No Spotify API");
+    return res.status(500).send("No Spotify API");
+  }
   let search = getRandomSearch();
   // console.log("Search", search)
   let att = 0;
@@ -54,7 +57,7 @@ router.get("/", function (req, res, next) {
   }
   function retry() {
     let randomOffset = Math.floor(Math.random() * 10);
-    req.spotifyApi
+    spotifyApi
       .searchTracks(search, {
         limit: 1,
         offset: randomOffset,
@@ -66,7 +69,6 @@ router.get("/", function (req, res, next) {
           if (!tracks || tracks.total === 0) {
             return doit();
           }
-          console.log(tracks.total);
           const getIpInfo = function (ip) {
             // IPV6 addresses can include IPV4 addresses
             // So req.ip can be '::ffff:86.3.182.58'
@@ -96,7 +98,7 @@ router.get("/", function (req, res, next) {
               tracks.items[0].album.available_markets.includes(
                 req.ipInfo.country
               )) ||
-            process.env.NODE_ENV === "dev"
+            process.env.NODE_ENV === "development"
           ) {
             let returnData = {
               album_name: tracks.items[0].album.name,
@@ -115,24 +117,22 @@ router.get("/", function (req, res, next) {
                   returnData.album_image,
                   returnData
                 );
-                res.set("Content-Type", "image/svg+xml");
+                res.setHeader("Content-Type", "image/svg+xml");
                 res.setHeader(
                   "Cache-Control",
                   "s-maxage=1, stale-while-revalidate"
                 );
-                res.send(svg);
+                return res.status(200).send(svg);
               });
           } else {
-            res.send("Bad Market Match");
+            return res.send("Bad Market Match");
           }
         },
         function (err) {
           console.log("nope", err);
-          doit();
+          return doit();
         }
       );
   }
-  doit();
-});
-
-export { router as MARKDOWN };
+  return doit();
+}

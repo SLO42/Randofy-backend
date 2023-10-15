@@ -1,3 +1,4 @@
+import { GlobalRef } from "../lib/js/helpers/GlobalRef.js";
 class SpotifyClient {
   client_id = "";
   client_secret = "";
@@ -66,5 +67,17 @@ class SpotifyClient {
     );
   }
 }
+
+const setGlobalVar = () => {
+  const client_id = process.env["SPOTIFY_CLIENT_ID"];
+  const client_secret = process.env["SPOTIFY_SECRET"];
+  return new SpotifyClient(client_id, client_secret);
+};
+
+const spotify = new GlobalRef("spotifyClient");
+if (!spotify.value) {
+  spotify.value = setGlobalVar();
+}
+export const spotifyApi = spotify.value;
 
 export default SpotifyClient;

@@ -18,48 +18,47 @@
 
 // require("dotenv").config();
 import * as dotenv from "dotenv";
-import express from "express";
+// import express from "express";
 dotenv.config();
 // import cors from "cors";
-import SpotifyClient from "./src/spotify-api/index.mjs";
+// const app = express();
+// app.listen(3333);
 
-import ROUTERS from "./src/routes/index.mjs";
-
-const app = express();
-app.listen(3333);
-
-const client_id = process.env["SPOTIFY_CLIENT_ID"];
-const client_secret = process.env["SPOTIFY_SECRET"];
-
-const spotifyApi = new SpotifyClient(client_id, client_secret);
-
-app.use((req, res, next) => {
-  //attach spotifyApi to req
-  req.spotifyApi = spotifyApi;
-  next();
-});
-
-// routes with a desc
-const ROUTES = {
-  "/": "Home Page",
-  "/login": "login route using Spotify 20Auth",
-  "/random": "generates random song",
-  "/markdown": "generates markdown complient svg of random song",
-  "/svg-s": "generates small svg of a random song",
-  "/svg-m": "generates medium svg of a random song",
-  "/svg-l": "generates large svg of a random song",
+export const currentRoutes = {
+  LANDING: ["api/", "Home Page"],
+  LOGIN: ["api/login", "login route using Spotify 2OAuth"],
+  RANDOM: ["api/random", "generates random song"],
+  MARKDOWN: ["api/markdown", "generates markdown compliant svg of random song"],
+  TOKEN: ["api/token", "generates token for Spotify 2OAuth"],
 };
 
-app.use("/", ROUTERS.LANDING);
-app.use("/login", ROUTERS.LOGIN);
-app.use("/random", ROUTERS.RANDOM);
-app.use("/markdown", ROUTERS.MARKDOWN);
-// app.use("/svg-s", svgSmall);
-// app.use("/svg-m", svgMedium);
-// app.use("/svg-l", svgLarge);
-app.use("/token", ROUTERS.TOKEN);
+// app.use((req, res, next) => {
+//   //attach spotifyApi to req
+//   req.spotifyApi = spotifyApi;
+//   next();
+// });
 
-export default app;
+import SpotifyClient from "/pages/src/spotify-api/index.mjs";
+const client_id = process.env["SPOTIFY_CLIENT_ID"];
+const client_secret = process.env["SPOTIFY_SECRET"];
+const spotifyApi = new SpotifyClient(client_id, client_secret);
+
+export default function handler(req, res) {
+  let returnHTML =
+    "<h1>Randofy Backend Api </h1> <h2> Available Routes: </h2> <ul>";
+  Object.keys(currentRoutes).map((key, index) => {
+    returnHTML += `<li key=${index}> <a href="${currentRoutes[key][0]}"> <p>${currentRoutes[key][0]}: ${currentRoutes[key][1]} </p> </a> </li>`;
+  });
+  returnHTML += "</ul>";
+  returnHTML +=
+    '<a href="https://github.com/settleformore" target="_blank"> <h3>Idea and contributions by <strong> Sabrina Settle </strong> </h3> </a>';
+  returnHTML +=
+    '<a href="https://github.com/SLO42" target="_blank"> <h3>Backend created by <strong> Samuel Oliveira </strong> </h3> </a>';
+  returnHTML +=
+    '<a href="https://github.com/SLO42/Randofy-backend" target="_blank"> <h3>Find the github project here! </strong> </h3> </a>';
+
+  res.status(200).send(returnHTML);
+}
 
 // var app = express();
 // app.use(cors());

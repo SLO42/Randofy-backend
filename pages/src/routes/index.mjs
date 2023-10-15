@@ -1,7 +1,6 @@
-import { LANDING } from "./landing-route.mjs";
-import { LOGIN } from "./login-route.mjs";
-import { RANDOM } from "./randomSong-route.mjs";
-import { MARKDOWN } from "./markdown-route.mjs";
+// import { LANDING } from "./landing-route.mjs";
+// import { LOGIN } from "./login-route.mjs";
+import { RANDOM } from "../../api/random.js";
 import { TOKEN } from "./token-route.mjs";
 
 // const ROUTES = {
@@ -23,9 +22,8 @@ export const currentRoutes = {
 };
 
 export default {
-  LANDING,
+  // LANDING,
   RANDOM,
-  MARKDOWN,
   TOKEN,
-  LOGIN,
+  // LOGIN,
 };
