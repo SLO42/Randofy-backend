@@ -92,6 +92,11 @@ const getData = (req, max, callback) => {
   }
   doit();
 };
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
 
 /* GET random song object https://.../random */
 export default function handler(req, res) {

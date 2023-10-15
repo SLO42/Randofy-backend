@@ -39,6 +39,12 @@ function createSVG(base64Image, imageData, songData) {
         </svg>`;
 }
 
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
+
 export default function handler(req, res) {
   if (!spotifyApi) {
     // throw new Error("No Spotify API");

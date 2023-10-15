@@ -37,6 +37,11 @@ export const currentRoutes = {
 //   req.spotifyApi = spotifyApi;
 //   next();
 // });
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
 
 export default function handler(req, res) {
   let returnHTML =
